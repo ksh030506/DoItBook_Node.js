@@ -1,0 +1,22 @@
+{
+  "name": "node---do-it-",
+  "version": "1.0.0",
+  "description": "Do it Node.js",
+  "main": "First.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sanghyun0/Node---Do-it-.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sanghyun0/Node---Do-it-/issues"
+  },
+  "homepage": "https://github.com/sanghyun0/Node---Do-it-#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
