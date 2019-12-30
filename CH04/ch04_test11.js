@@ -9,6 +9,3 @@ inFile.on('data', function(data){
 inFile.on('end',function(){
     console.log('읽기 종료');
 });
-
-var buffer2 = Buffer.from('Hello', 'utf8');
-console.log('두번째 버퍼의 길이 : '+ buffer2.byteLength);

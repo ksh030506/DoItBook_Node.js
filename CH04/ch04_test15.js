@@ -13,7 +13,7 @@ var logger = new (winston.Logger)({
             filename:'./log/server',
             datePattern:'_YYYY-MM-DD.log',
             colorize:false,
-            maxsize:5000000,
+            maxsize:50000000,
             maxFiles:1000,
             level:'info',
             showLevel:true,
