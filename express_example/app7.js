@@ -17,10 +17,10 @@ app.use(function(req, res, next){
     console.log('첫번째 미들웨어 호출');
 
     var userAgent = req.header('User-Agent');
-    var Paramname = req.query.name || req.body.name;
+    var ParamId = req.query.id || req.body.id;
 
     res.send('<h3> userAgent => '+userAgent+'<h3>' + 
-    '<h3> Paramname => '+Paramname+'<h3>');
+    '<h3> ParamId => '+ParamId+'<h3>');
 }); //미들웨어 등록 (함수)
 
 
