@@ -28,11 +28,10 @@ router.route('/process/login').post(function(req, res){
 });
 
 
-
-app.use('/', router);
 app.all('*', function(req, res){
     res.status(404).send('<h1>요청하신페이지는 없습니다.<h1>');
 });
+app.use('/', router);
 
 
 
