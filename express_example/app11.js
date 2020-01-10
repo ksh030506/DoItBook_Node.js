@@ -3,7 +3,11 @@ var http = require('http');
 var static = require('serve-static');
 var path = require('path');
 var app = express();
+
 var bodyParser = require('body-parser');
+
+var cookieParser = require('cookie-parser');
+app.use(cookieParser());
 
 app.set('port', process.env.PORT || 3000);
 app.use(static(path.join(__dirname, 'public')));
@@ -14,17 +18,22 @@ app.use(bodyParser.json());
 
 var router = express.Router();
 
-router.route('/process/login').post(function(req, res){
-    console.log('/process/login 라우팅 함수에서 받음');
+router.route('/process/setUserCookie').get(function(req, res){
+    console.log('/process/setUserCookie 라우팅 함수 호출됨');
 
-    var ParamId = req.query.id || req.body.id;
-    var ParamPass = req.query.password || req.body.password;
+    res.cookie('user', {
+        id:'kim',
+        name:'김상현',
+        authorized:true
+    });
 
-    res.writeHead(200, {"Content-Type":"text/html;charset=utf8"});
-    res.write("<h1>서버에서 로그인 음답");
-    res.write("<div><p>" + ParamId + "</p></div>");
-    res.write("<div><p>" + ParamPass + "</p></div>");
-    res.end();
+    res.redirect('/process/showCookie');
+});
+
+router.route('/process/showCookie').get(function(req, res){
+    console.log('/process/showCookie 라우팅 함수 호출됨');
+
+    res.send(req.cookies);  //웹브라우저에 저장 (확인용)
 });
 
 
