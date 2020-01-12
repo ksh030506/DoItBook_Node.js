@@ -29,14 +29,32 @@ function connectDB() {
 
         //스키마 정의 (타입 정의, 객제 지정하기)
         UserSchema = mongoose.Schema({
-            id: String,
-            name: String,
-            password: String
+            id: {type: String, required:true, unique:true},
+            password: {type: String, required:true},
+            name: {type: String, index:'hashed'},
+            age: {type:Number, 'default': -1},
+            created_at: {type:Date, index:{unique:false}, 'default':Date.now()},
+            updated_at: {type:Date, index:{unique:false}, 'default':Date.now()}
         });
 
         console.log('스키마 객체 정의함');
 
-        UserModel = mongoose.model('users', UserSchema);  //연결 해줌
+
+        UserSchema.static('findById', function(id, callback){
+            return this.find({"id":id}, callback);
+        });  //static 메서드
+
+        /*
+        UserSchema.statics.findById = function(id, callback){
+            return this.find({"id":id}, callback);  //this 모델객체 참조
+        };*/
+
+        UserSchema.static('findAll', function(callback){
+            return this.find({}, callback);
+        });
+
+
+        UserModel = mongoose.model('users2', UserSchema);  //연결 해줌
         console.log('users 모델 정의함');
     });
 
@@ -143,10 +161,76 @@ router.route('/process/addUser').post(function(req, res){
     }
 });
 
+router.route('/public/process/listuser').post(function(req, res){
+    console.log('/public/process/listuser 라우팅 함수 호출됨');
+
+    if(database) {
+        UserModel.findAll(function(err, results){
+            if(err){
+                console.log('에러 발생');
+                res.writeHead(200, {"Content-Type":"text/html;charset=utf8"});
+                res.write('<h1>에러 발생</h1>');
+                res.end();
+                return;
+            }
+
+            if(results){
+                console.dir(results);
+
+                res.writeHead(200, {"Content-Type":"text/html;charset=utf8"});
+                res.write('<h3>사용자 리스트</h3>');
+                res.write("<div><ul>");
+
+                for(var i = 0; i < results.length; i++){
+                    var curId = results[i]._doc.id;
+                    var curName = results[i]._doc.name;
+
+                    res.write("    <li>#" + i + " -> " + curId + ", " + curName + "</li>");
+                }
+
+                res.write('</ul></div>');
+                res.end();
+            } else {
+                console.log('에러 발생');
+                res.writeHead(200, {"Content-Type":"text/html;charset=utf8"});
+                res.write('<h1>조회된 사용자 없음</h1>');
+                res.end();
+            }
+        });
+    } else {
+        console.log('에러 발생');
+        res.writeHead(200, {"Content-Type":"text/html;charset=utf8"});
+        res.write('<h1>데이터베이스 연결 안됨</h1>');
+        res.end();
+    }
+});
+
 app.use('/', router);
 
 var authUser = function(db, id, password, callback) {
     console.log('authUser 호출됨 ' + id + ', '+ password);
+
+    UserModel.findById(id, function(err, results){
+        if(err) {
+            callback(err, null);
+            return;
+        }
+
+        console.log('아이디 %s로 검색하였습니다.');
+        if(results.length > 0) {
+            if(results[0]._doc.password === password) {
+                console.log('비밀번호 일치함');
+                callback(null, results);
+            } else {
+                console.log('비밀번호 일치하지 않음');
+                callback(null, null);
+            }
+        } else {
+            console.log('아이디 일치하는 사용자 없슴');
+            callback(null, null);
+        }
+    });
+
 
     UserModel.find({"id":id, "password":password}, function(err, docs)
     {
