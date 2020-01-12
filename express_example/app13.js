@@ -12,6 +12,7 @@ var cors = require('cors');  //ajxa로 요청 다중 서버 접속
 
 app.set('port', process.env.PORT || 3000);
 app.use(static(path.join(__dirname, 'public')));
+
 app.use('/uploads', static(path.join(__dirname, 'uploads')));
 
 
