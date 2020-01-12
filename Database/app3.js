@@ -10,23 +10,41 @@ var expressSession = require('express-session');
 //익스프레스 에러 핸들어 모듈 사용
 var expressErrorHandler = require('express-error-handler');
 
-//mongodb 모듈 사용
-var MongoClient = require('mongodb').MongoClient;
+//mongoose 모듈 사용
+var mongoose = require('mongoose');
 
 var database;
+var UserSchema;
+var UserModel;
 
 function connectDB() {
     var databaseUrl = 'mongodb://localhost:27017/local';
 
-    MongoClient.connect(databaseUrl, function(err, db){
-        if(err){
-            console.log('데이터베이스 연결 시 에러 발생함');
-            return;
-        }
+    mongoose.Promise = global.Promise;
+    mongoose.connect(databaseUrl);
+    database = mongoose.connection;
 
-        console.log('데이터베이스 연결됨 : ' + databaseUrl);
-        database = db;
+    database.on('open', function(){
+        console.log('데이터베이스에 연결됨 : ' + databaseUrl);
+
+        //스키마 정의
+        UserSchema = mongoose.Schema({
+            id: String,
+            name: String,
+            password: String
+        });
+
+        console.log('스키마 객체 정의함');
+
+        UserModel = mongoose.model('users', UserSchema);  //연결 해줌
+        console.log('users 모델 정의함');
     });
+
+    database.on('disconnected', function(){
+        console.log('데이터베이스 연결이 끊어짐');
+    });
+
+    database.on('error', console.error.bind(console, 'mongoose 연결 에러'));
 }
 
 var app = express();
@@ -130,9 +148,8 @@ app.use('/', router);
 var authUser = function(db, id, password, callback) {
     console.log('authUser 호출됨 ' + id + ', '+ password);
 
-    var users = db.collection('users');
-
-    users.find({"id":id, "password":password}).toArray(function(err, docs){
+    UserModel.find({"id":id, "password":password}, function(err, docs)
+    {
         if(err){
             callback(err, null);
             return;
@@ -151,20 +168,16 @@ var authUser = function(db, id, password, callback) {
 var addUser = function(db, id, password, name, callback){
     console.log('addUser 호출됨 ' + id + ', ' + password + ', ' + name);
 
-    var users = db.collection('users');
-    users.insertMany([{"id":id, "password":password, "name":name}], function(err, result){
-        if(err) {
+
+    var user = new UserModel({"id":id, "password":password, "name":name});
+    user.save(function(err){
+        if(err){
             callback(err, null);
             return;
         }
 
-        if(result.insertedCount > 0) {
-            console.log('사용자 추가됨' + result.insertedCount);
-            callback(null, result);
-        } else {
-            console.log('추가된 레코드강 없음');
-            callback(null, null);
-        }
+        console.log('사용자 데이터 추가함');
+        callback(null, user);
     });
 };
 
