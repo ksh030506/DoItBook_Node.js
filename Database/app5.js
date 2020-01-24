@@ -66,7 +66,7 @@ function connectDB() {
                 inSalt).update(plainText).digest('hex');
             } else {
                 return crypto.createHmac('sha1',
-                this.salt).update(plainText).digest('hext');
+                this.salt).update(plainText).digest('hex');
             }
         });
 
@@ -268,7 +268,7 @@ var authUser = function(db, id, password, callback) {
         if(results.length > 0) {
             var user = new UserModel({id:id});
             var authenticated = user.authenticate(password,
-            results[0]._doc.salt, results[0]._doc.password);
+            results[0]._doc.salt, results[0]._doc.hashed_password);
 
 
             if(authenticated) {
