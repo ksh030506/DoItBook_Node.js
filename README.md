@@ -6,8 +6,9 @@
 * 게시판을 만들어 클라우드에 올리고 베포한다
 
 ### 설치 방법
-* 브라켓 다운로드
+* 브라켓, Node 다운로드
   - 브라켓 다운로드 : [brackets.io](http://brackets.io/)
+  - Node 다운로드 : [Node](https://nodejs.org/ko/)
 * 버전 확인
   ```
   node -v
