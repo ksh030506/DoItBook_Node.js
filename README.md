@@ -12,15 +12,20 @@
   node -v
   npm -v
   ```
-시작하기
-npm init
-실행하기
-node 파일이름.js
-외부 모듈 설치
-npm install 모듈이름 --save
+* 시작하기
+  ```
+  npm init
+  ```
+* 실행하기
+  ```
+  node 파일이름.js
+  ```
+* 외부 모듈 설치
+  ```
+  npm install 모듈이름 --save
+  ```
 
-
-
+### 사용예제
 
 
 
