@@ -7,7 +7,7 @@
 
 ### 설치 방법
 * 브라켓 다운로드
-  - 브라켓 다운로드 : [brackets.io](http://brackets.io/)
+  - 브라켓 다운로드 : [brackets.io](http://brackets.io/){: target="_blank"}
 * 버전 확인
   ```
   node -v
