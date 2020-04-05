@@ -7,7 +7,7 @@
 
 ### 설치 방법
 * 브라켓 다운로드
-  브라켓 다운로드 : [네이버로 가자](https://www.naver.com/){: target="_blank"}
+  - 브라켓 다운로드 : [brackets.io](http://brackets.io/)
 * 버전 확인
   ```
   node -v
@@ -31,5 +31,3 @@
 
 
 책 이름 : DO it Node.js 프로그래밍
-
-[네이버로 가자](https://www.naver.com/){: target="_blank"}
