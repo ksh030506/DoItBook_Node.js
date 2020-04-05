@@ -15,7 +15,7 @@
   node -v
   npm -v
   ```
-* 시작하기
+* 시작하기 - 익스프레스
   ```
   npm init
   ```
@@ -63,5 +63,7 @@
     14. 게시판 만들기
     15. 클라우드에 올리기 - 깃, 배포하기
   ```
-
-
+  
+#### - Do it 스터디룸 : [DoIt_Class](https://cafe.naver.com/doitstudyroom)
+#### - 이지스퍼블리싱 - 출판사 : [EasysPublishing](http://www.easyspub.co.kr/)
+#### - 깃허브 : [GitHub/ksh030506](https://github.com/ksh030506)
