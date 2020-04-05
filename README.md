@@ -1,4 +1,4 @@
-# Do_ItBook_Node.js
+# DoItBook_Node.js
 
 ### 책 이름 : DO it Node.js 프로그래밍
 ## 프로젝트 소개
@@ -63,6 +63,12 @@
     14. 게시판 만들기
     15. 클라우드에 올리기 - 깃, 배포하기
   ```
+
+## 선행학습
+* SQL에 대한 기본 지식 > 몽고 데이터베이스를 다루며, DDL, DML, DCL 등의 질의어와 쿼리 경험 필요
+* JavaScript에 대한 기본적인 지식이 필요함
+* 기본적인 웹 용어 알기 - 프로토콜, 요청 응답 등등
+
   
 #### - Do it 스터디룸 : [DoIt_Class](https://cafe.naver.com/doitstudyroom)
 #### - 이지스퍼블리싱 - 출판사 : [EasysPublishing](http://www.easyspub.co.kr/)
